@@ -20,7 +20,7 @@ args = vars(parser.parse_args())
 def gen_hashed_fm_feats(feats, nr_bins):
     feats = ['{0}:{1}:1'.format(field-1, hashstr(feat, nr_bins)) for (field, feat) in feats]
     return feats
-
+# generate the frequent feats (Here is fc.trva.t10.txt)
 frequent_feats = read_freqent_feats(args['threshold'])
 
 with open(args['out_path'], 'w') as f:
