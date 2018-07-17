@@ -18,20 +18,21 @@ target_cat_feats = ['C9-a73ee510', 'C22-', 'C17-e5ba7672', 'C26-', 'C23-32c7478e
 
 with open(args['dense_path'], 'w') as f_d, open(args['sparse_path'], 'w') as f_s:
     for row in csv.DictReader(open(args['csv_path'])):
+        # numeric features (Here are I1, I2, I3, ..., I14)
         feats = []
         for j in range(1, 14):
             val = row['I{0}'.format(j)]
             if val == '':
-                val = -10 
+                val = -10 # Using the impossible value to replace NA (Here is -10)
             feats.append('{0}'.format(val))
         f_d.write(row['Label'] + ' ' + ' '.join(feats) + '\n')
-        
+        # category features (Here are C1, C2, C3, ..., C27)
         cat_feats = set()
         for j in range(1, 27):
             field = 'C{0}'.format(j)
             key = field + '-' + row[field]
             cat_feats.add(key)
-
+        # find weather features in target_cat_feats is happend in every instance
         feats = []
         for j, feat in enumerate(target_cat_feats, start=1):
             if feat in cat_feats:
